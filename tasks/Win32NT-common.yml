@@ -1,9 +1,12 @@
 ---
 - name: Install applications
   win_chocolatey:
-    name: "{{ common_windows_packages }}"
+    name: "{{ item }}"
+    package_params: "{{ common_windows_packages_args[item].package_params | default('') }}"
+    allow_prerelease: "{{ common_windows_packages_args[item].allow_prerelease | default(false) }}"
   register: result
   until: result is succeeded
+  loop: "{{ common_windows_packages }}"
 
 - name: Install openssh
   win_chocolatey:

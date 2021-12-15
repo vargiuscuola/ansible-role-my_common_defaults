@@ -9,3 +9,20 @@ common_windows_packages:
   - putty.install
   - ultradefrag
   - winscp
+  # added by vargiuscuola
+  - firefox
+  - googlechrome
+  - libreoffice-fresh
+  - 7zip
+  - adobereader
+  - pdf24
+  - open-shell
+  - windirstat
+  - sysinternals
+
+common_windows_packages_args:
+  firefox:
+    package_params: '/l:it'
+  open-shell:
+    allow_prerelease: true
+  
