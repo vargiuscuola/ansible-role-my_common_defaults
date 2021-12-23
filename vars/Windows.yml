@@ -15,7 +15,6 @@ common_windows_packages:
   - libreoffice-fresh
   - 7zip
   - adobereader
-  - pdf24
   - open-shell
   - windirstat
   - sysinternals

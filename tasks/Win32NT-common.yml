@@ -92,17 +92,26 @@
 - name: Enable Firewall Inbound Rules Group
   win_shell: Enable-NetFirewallRule -DisplayGroup "{{ item }}"
   changed_when: false
+  #vs - `ignore_errors` needed because of localization
+  ignore_errors: true
   loop:
     - Remote Desktop
+    - Desktop remoto
     - Windows Remote Management
+    - Gestione remota Windows
 
 - name: Use the plaintext WinRM transport and force it to use basic authentication
   win_shell: winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 
 # Can't use ansible module because of: https://github.com/ansible/ansible/issues/32478
 - name: Allow ICMP
-  win_shell: Set-NetFirewallRule -DisplayName "File and Printer Sharing (Echo Request - ICMPv4-In)" -enabled True
+  win_shell: Set-NetFirewallRule -DisplayName "{{ item }}" -enabled True
   changed_when: false
+  #vs - `ignore_errors` needed because of localization
+  ignore_errors: true
+  loop:
+  - File and Printer Sharing (Echo Request - ICMPv4-In)
+  - Condivisione file e stampanti (richiesta echo - ICMPv4-In)
 
 - name: Show file extensions in Explorer
   win_regedit:
@@ -227,6 +236,8 @@
       - UpdateRollups
       - Updates
   register: windows_updates
+  #vs - come update can fail
+  ignore_errors: true
 
 - name: Windows reboot
   win_reboot:
